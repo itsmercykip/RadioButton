@@ -1,0 +1,71 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class RadioButtonDemo extends JFrame {
+
+    private JRadioButton birdButton, catButton, dogButton, rabbitButton, pigButton;
+    private JLabel imageLabel;
+    private ButtonGroup group;
+
+    public RadioButtonDemo() {
+        setTitle("RadioButtonDemo");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        birdButton = new JRadioButton("Bird");
+        catButton = new JRadioButton("Cat");
+        dogButton = new JRadioButton("Dog");
+        rabbitButton = new JRadioButton("Rabbit");
+        pigButton = new JRadioButton("Pig");
+
+        group = new ButtonGroup();
+        group.add(birdButton);
+        group.add(catButton);
+        group.add(dogButton);
+        group.add(rabbitButton);
+        group.add(pigButton);
+
+        add(birdButton);
+        add(catButton);
+        add(dogButton);
+        add(rabbitButton);
+        add(pigButton);
+
+        imageLabel = new JLabel();
+        add(imageLabel);
+
+        birdButton.addActionListener(new PetActionListener("Bird", "bird.jpg"));
+        catButton.addActionListener(new PetActionListener("Cat", "cat.jpg"));
+        dogButton.addActionListener(new PetActionListener("Dog", "dog.jpg"));
+        rabbitButton.addActionListener(new PetActionListener("Rabbit", "rabbit.jpg"));
+        pigButton.addActionListener(new PetActionListener("Pig", "pig.jpg"));
+    }
+
+    private class PetActionListener implements ActionListener {
+        private String petName;
+        private String imageName;
+
+        public PetActionListener(String petName, String imageName) {
+            this.petName = petName;
+            this.imageName = imageName;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "You selected: " + petName);
+
+            ImageIcon icon = new ImageIcon("images/" + imageName);
+            imageLabel.setIcon(icon);
+        }
+    }
+
+    public static void main(String[] args) {
+        // Run the GUI in the Event Dispatch Thread
+        SwingUtilities.invokeLater(() -> {
+            RadioButtonDemo frame = new RadioButtonDemo();
+            frame.setVisible(true);
+        });
+    }
+}
